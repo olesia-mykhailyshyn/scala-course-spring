@@ -1,0 +1,63 @@
+name: Code Verification
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-naming:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checking branch naming convention
+        run: |
+          if [[ ${{ github.head_ref }} =~ ^unit-[0-9]+$ ]]; then
+            echo "Naming convention check for $GITHUB_HEAD_REF branch is passed successfully"
+          else
+            echo "Naming convention is failed for $GITHUB_HEAD_REF branch."
+            exit 1
+          fi
+
+  compile:
+    runs-on: ubuntu-latest
+    needs: branch-naming
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: coursier/cache-action@v6
+      - uses: olafurpg/setup-scala@v14
+        with:
+          java-version: openjdk@1.17.0
+      - name: Compile main
+        run: sbt clean compile
+      - name: Compile test
+        run: sbt test:compile
+
+  test:
+    runs-on: ubuntu-latest
+    needs: compile
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: coursier/cache-action@v6
+      - uses: olafurpg/setup-scala@v14
+        with:
+          java-version: openjdk@1.17.0
+      - name: Run tests
+        run: sbt "testOnly $(echo "kse.${{github.head_ref}}.challenge.*" | sed 's/-//g')"
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: compile
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: coursier/cache-action@v6
+      - uses: olafurpg/setup-scala@v14
+        with:
+          java-version: openjdk@1.17.0
+      - name: Lint code
+        run: sbt scalafmtCheckAll
