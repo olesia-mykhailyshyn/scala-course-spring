@@ -1,6 +1,6 @@
 ## Functional Programing Course at KSE
 
-# Scala Course Autumn
+# Scala Course Spring
 
 ## Documentation and Resources
 * [Scala 3 Reference](https://docs.scala-lang.org/scala3/reference/)
