@@ -2,7 +2,6 @@ package kse.unit1.challenge
 
 import scala.annotation.tailrec
 
-
 object arithmetic:
 
   type Number = Long
