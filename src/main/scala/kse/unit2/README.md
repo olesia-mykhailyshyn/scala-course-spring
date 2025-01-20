@@ -47,6 +47,13 @@ Review
 * [Type Disjunction (Union Types) in Scala](https://www.baeldung.com/scala/type-disjunction)
 * [Understanding Union Types in Scala 3](https://www.turingtaco.com/understanding-union-types-in-scala-3/)
 
+### Explicit Nulls
+Explicit nulls is an opt-in feature that modifies the Scala type system, 
+which makes reference types (anything that extends AnyRef) non-nullable.
+
+Review
+* [Explicit Nulls](https://docs.scala-lang.org/scala3/reference/experimental/explicit-nulls.html)
+
 ### Pattern matching
 
 ```scala 3
