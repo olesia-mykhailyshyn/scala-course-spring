@@ -30,6 +30,7 @@ In mathematics, a semiring is an algebraic structure similar to a ring, but it d
 A semiring consists of a set equipped with two binary operations, typically called addition and multiplication.
 
 Review
+* [Monoid](https://en.wikipedia.org/wiki/Monoid)
 * [Semiring](https://en.wikipedia.org/wiki/Semiring)
 * [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra)
 
