@@ -46,7 +46,7 @@ object nats:
           case (One, Two) | (Two, One) => Zero
           case (Two, Two)              => One
 
-    def multiplication: (Nat3, => Nat3) => Nat3 =
+    val multiplication: (Nat3, => Nat3) => Nat3 =
       (left, right) =>
         if left == Zero then Zero
         else
