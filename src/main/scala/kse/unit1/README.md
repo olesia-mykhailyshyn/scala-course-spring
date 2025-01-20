@@ -4,10 +4,9 @@ You are challenged to implement `addition`, `multiplication` and `power` functio
 * replace `???` with your implementation;
 * functions must be tail-recursive;
 * functions must cover either **non-negative** numbers (regular tasks);
-* or **any (negative including)** numbers (optional tasks);
-* it is **allowed** to use only `increment`, `decrement`, `isZero`, `isNonNegative`, `abs`, `addition`
-and `multiplication` functions. It is **not allowed** to use regular `+`, `*`, `pow`, `<`, `<=`, `==`, etc.
-* it is **allowed** to use boolean operation such as `&&`, `||` or `^` in `if-then-else` conditions.
+  or **any (negative including)** numbers (optional tasks) for  `addition` and `multiplication` only; keep `p` in `power` **non-negative**.
+* it is allowed to use only `increment`, `decrement`, `isZero`, `isNonNegative`, `abs`, `addition`
+and `multiplication` functions. It is not allowed to use regular `+`, `*` or `pow`.
 * it is not allowed to use Scala 2 syntax if Scala 3 syntax is applicable
 (i.e. curly braces `{...}` instead of semicolon `:` and tabulations);
 * all tests should pass;
