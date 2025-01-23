@@ -23,14 +23,14 @@ end AdditionSpecification
 
 object MultiplicationSpecification extends Properties("Multiplication"):
 
-  property("left * right should be correctly evaluated") = forAll(genSmallNonNegativeNumber, genSmallNonNegativeNumber): (left: Number, right: Number) =>
+  property("left * right should be correctly evaluated") = forAll(genSmallNumber, genSmallNumber): (left: Number, right: Number) =>
     multiplication(left, right) == left * right
 
 end MultiplicationSpecification
 
 object PowerSpecification extends Properties("Power"):
 
-  property("base ^ p should be correctly evaluated") = forAll(genSmallNonNegativeNumber, genSmallNonNegativeNumber): (base: Number, p: Number) =>
+  property("base ^ p should be correctly evaluated") = forAll(genSmallNumber, genSmallNonNegativeNumber): (base: Number, p: Number) =>
     (base != 0 && p != 0) ==> {
       power(base, p) == Math.pow(base, p).toLong
     }
