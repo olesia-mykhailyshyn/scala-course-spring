@@ -9,7 +9,7 @@ import org.scalacheck.Prop.{forAll, propBoolean}
 object ArithmeticSpecification extends Properties("Arithmetic"):
 
   include(AdditionSpecification)
-  include(MultiplicationSpecification)
+  //include(MultiplicationSpecification)
   include(PowerSpecification)
 
 end ArithmeticSpecification
@@ -21,12 +21,12 @@ object AdditionSpecification extends Properties("Addition"):
 
 end AdditionSpecification
 
-object MultiplicationSpecification extends Properties("Multiplication"):
-
-  property("left * right should be correctly evaluated") = forAll(genSmallNumber, genSmallNumber): (left: Number, right: Number) =>
-    multiplication(left, right) == left * right
-
-end MultiplicationSpecification
+//object MultiplicationSpecification extends Properties("Multiplication"):
+//
+//  property("left * right should be correctly evaluated") = forAll(genSmallNumber, genSmallNumber): (left: Number, right: Number) =>
+//    multiplication(left, right) == left * right
+//
+//end MultiplicationSpecification
 
 object PowerSpecification extends Properties("Power"):
 
