@@ -25,11 +25,12 @@ object arithmetic:
 
   @tailrec
   def addition(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
+//    require(left >= 0, "Left must be non-negative")
+//    require(right >= 0, "Right must be non-negative")
 
     if isZero(left) then right
     else if isZero(right) then left
+    else if isNonNegative(right) then addition(increment(left), decrement(right))
     else addition(decrement(left), increment(right))
 
   def multiplication(left: Number, right: Number): Number =
@@ -40,7 +41,7 @@ object arithmetic:
     else if isZero(right) then 0
     else if left == 1 then right
     else if right == 1 then left
-    else addition(multiplication(left, decrement(right)),left)
+    else addition(multiplication(left, decrement(right)), left)
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")
