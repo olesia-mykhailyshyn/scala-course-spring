@@ -34,14 +34,15 @@ object arithmetic:
     else addition(decrement(left), increment(right))
 
   def multiplication(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
+//    require(left >= 0, "Left must be non-negative")
+//    require(right >= 0, "Right must be non-negative")
 
-    if isZero(left) then 0
-    else if isZero(right) then 0
-    else if left == 1 then right
-    else if right == 1 then left
-    else addition(multiplication(left, decrement(right)), left)
+    @tailrec
+    def multiplicationTailRec(left: Number, right: Number, intermResult: Number = 0): Number =
+      if isZero(right) then intermResult
+      else multiplicationTailRec(left, decrement(right), addition(intermResult, left))
+
+    multiplicationTailRec(abs(left), abs(right))
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")
