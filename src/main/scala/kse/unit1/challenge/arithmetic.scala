@@ -25,24 +25,21 @@ object arithmetic:
 
   @tailrec
   def addition(left: Number, right: Number): Number =
-//    require(left >= 0, "Left must be non-negative")
-//    require(right >= 0, "Right must be non-negative")
 
     if isZero(left) then right
     else if isZero(right) then left
-    else if isZero(left) && isZero(right) then 0
     else if isNonNegative(right) then addition(increment(left), decrement(right))
     else addition(decrement(left), increment(right))
 
   def multiplication(left: Number, right: Number): Number =
     @tailrec
-    def multiplicationTailRec(left: Number, right: Number, acc: Number = 0): Number =
+    def multiplicationTailRec(left: Number, right: Number, acc: Number): Number =
       if isZero(right) then acc
       else if isNonNegative(right) then multiplicationTailRec(left, decrement(right), addition(acc, left))
       else if !isNonNegative(left) && !isNonNegative(right) then multiplicationTailRec(abs(left), decrement(abs(right)), addition(acc, abs(left)))
       else multiplicationTailRec(decrement(left), right, addition(acc, right))
 
-    multiplicationTailRec(left, right)
+    multiplicationTailRec(left, right, 0)
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")
