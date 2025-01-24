@@ -49,10 +49,10 @@ object arithmetic:
     require(base != 0 || p != 0, "0^0 is undefined")
 
     @tailrec
-    def powerTailRec(base: Number, p: Number, intermResult: Number = 1): Number =
-      if isZero(p) then intermResult
+    def powerTailRec(base: Number, p: Number, acc: Number): Number =
+      if isZero(p) then acc
       else if isZero(decrement(base)) then 1
-      else if isZero(decrement(p)) then multiplication(intermResult, base) // if p == 1
-      else powerTailRec(base, decrement(p), multiplication(intermResult, base))
+      else if isZero(decrement(p)) then multiplication(acc, base) // if p == 1
+      else powerTailRec(base, decrement(p), multiplication(acc, base))
 
-    powerTailRec(base, p)
+    powerTailRec(base, p, 1)
