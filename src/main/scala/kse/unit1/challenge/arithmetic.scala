@@ -29,15 +29,15 @@ object arithmetic:
 //    require(right >= 0, "Right must be non-negative")
 
     if isZero(left) then right
-    // else if isZero(right) then left
-    // else if isZero(left) && isZero(right) then 0
+     else if isZero(right) then left
+     else if isZero(left) && isZero(right) then 0
     else if isNonNegative(right) then addition(increment(left), decrement(right))
     else addition(decrement(left), increment(right))
 
   def multiplication(left: Number, right: Number): Number =
     if isZero(left) || isZero(right) then return 0
-    // else if isZero(decrement(left)) then return right
-    // else if isZero(decrement(right)) then return left
+     else if isZero(decrement(left)) then return right
+     else if isZero(decrement(right)) then return left
 
     @tailrec
     def multiplicationTailRec(left: Number, right: Number, intermResult: Number = 0): Number =
