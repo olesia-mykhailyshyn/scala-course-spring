@@ -35,22 +35,14 @@ object arithmetic:
     else addition(decrement(left), increment(right))
 
   def multiplication(left: Number, right: Number): Number =
-    if isZero(left) || isZero(right) then return 0
-    else if isZero(decrement(left)) then return right
-    else if isZero(decrement(right)) then return left
-
     @tailrec
-    def multiplicationTailRec(left: Number, right: Number, intermResult: Number = 0): Number =
-      if isZero(right) then intermResult
-      else multiplicationTailRec(left, decrement(right), addition(intermResult, left))
+    def multiplicationTailRec(left: Number, right: Number, acc: Number = 0): Number =
+      if isZero(right) then acc
+      else if isNonNegative(right) then multiplicationTailRec(left, decrement(right), addition(acc, left))
+      else if !isNonNegative(left) && !isNonNegative(right) then multiplicationTailRec(abs(left), decrement(abs(right)), addition(acc, abs(left)))
+      else multiplicationTailRec(decrement(left), right, addition(acc, right))
 
-    @tailrec
-    def negate(value: Number, intermResult: Number = 0): Number =
-      if isZero(value) then intermResult
-      else negate(decrement(value), decrement(intermResult))
-
-    if (isNonNegative(left) && isNonNegative(right)) || (!isNonNegative(left) && !isNonNegative(right)) then multiplicationTailRec(abs(left), abs(right))
-    else negate(multiplicationTailRec(abs(left), abs(right)))
+    multiplicationTailRec(left, right)
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")
