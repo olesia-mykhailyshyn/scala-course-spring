@@ -12,7 +12,7 @@ object booleans:
   type Boolean
 
   val negation: Boolean => Boolean =
-    case True => False.asInstanceOf[Boolean]
+    case True  => False.asInstanceOf[Boolean]
     case False => True.asInstanceOf[Boolean]
 
 //  val conjunction: (Boolean, => Boolean) => Boolean = ???
