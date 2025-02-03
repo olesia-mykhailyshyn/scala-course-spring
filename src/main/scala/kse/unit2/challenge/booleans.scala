@@ -23,19 +23,14 @@ object booleans:
 
   extension (value: Boolean)
 
-    @targetName("Negation")
     infix def unary_! : Boolean = ???
 
-    @targetName("Conjunction")
     infix def ∧(that: => Boolean): Boolean = ???
 
-    @targetName("Disjunction")
     infix def ∨(that: => Boolean): Boolean = ???
 
-    @targetName("Implication")
     infix def →(that: => Boolean): Boolean = ???
 
-    @targetName("Equivalence")
     infix def ↔(that: => Boolean): Boolean = ???
 
   def fold(operation: (Boolean, Boolean) => Boolean, unit: Boolean)(list: List[Boolean]): Boolean = ???
