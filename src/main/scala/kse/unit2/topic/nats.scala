@@ -69,10 +69,8 @@ object nats:
 
   extension (value: Nat3)
 
-    @targetName("Addition")
     infix def +(that: Nat3): Nat3 = functions.addition(value, that)
 
-    @targetName("Multiplication")
     infix def *(that: => Nat3): Nat3 = functions.multiplication(value, that)
 
   object `sum and product`:

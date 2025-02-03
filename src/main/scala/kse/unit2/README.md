@@ -6,7 +6,7 @@ You are challenged to implement Boolean algebra:
 * it is not allowed to use embedded logic operations for implementing boolean operators;
 * it is required to provide implementation for `NegationSpecification`, `ConjunctionSpecification`
 `DisjunctionSpecification`, `ImplicationSpecification`, `AxiomsSpecification`, `FoldSpecification`
-* `False ∧ value should ignore the second argument`, `True ∨ value should ignore the second argument` 
+* `False ∧ value should ignore the second argument`, `True ∨ value should ignore the second argument`
 and `False → value should ignore the second argument` are required.
 * `EquivalenceSpecification` is an optional challenge;
 * all tests should pass;
@@ -26,7 +26,7 @@ property("False → value should ignore the second argument")
 ## Key notes
 
 ### Math
-In mathematics, a semiring is an algebraic structure similar to a ring, but it does not require the existence of additive inverses. 
+In mathematics, a semiring is an algebraic structure similar to a ring, but it does not require the existence of additive inverses.
 A semiring consists of a set equipped with two binary operations, typically called addition and multiplication.
 
 Review
@@ -44,15 +44,13 @@ Review
 * [Union type](https://en.wikipedia.org/wiki/Union_type)
 * [Scala 3 Reference. Union Types](https://docs.scala-lang.org/scala3/reference/new-types/union-types.html)
 * [Scala 3 Book. Union Types](https://docs.scala-lang.org/scala3/book/types-union.html)
-* [Type Disjunction (Union Types) in Scala](https://www.baeldung.com/scala/type-disjunction)
 * [Understanding Union Types in Scala 3](https://www.turingtaco.com/understanding-union-types-in-scala-3/)
 
 ### Explicit Nulls
-Explicit nulls is an opt-in feature that modifies the Scala type system, 
+Explicit nulls is an opt-in feature that modifies the Scala type system,
 which makes reference types (anything that extends AnyRef) non-nullable.
 
 Review
-* [Explicit Nulls](https://docs.scala-lang.org/scala3/reference/experimental/explicit-nulls.html)
 
 ### Pattern matching
 
@@ -69,8 +67,6 @@ def addition(left: Nat3, right: Nat3): Nat3 =
 Review
 * [Pattern matching](https://en.wikipedia.org/wiki/Pattern_matching)
 * [Scala 3 Book. Pattern Matching](https://docs.scala-lang.org/tour/pattern-matching.html)
-* [Pattern Matching in Scala](https://www.baeldung.com/scala/pattern-matching)
-* [Scala 3: Match Types Quickly Explained](https://rockthejvm.com/articles/scala-3-match-types)
 * [Lean 4 Reference. Pattern Matching](https://lean-lang.org/doc/reference/latest/Terms/Pattern-Matching/)
 
 ### Call-by-Value and Call-by-Name parameters
@@ -83,17 +79,12 @@ def multiplication(left: Nat3, right: => Nat3): Nat3
 
 Review
 * [Scala 3 Book. By-name parameters](https://docs.scala-lang.org/tour/by-name-parameters.html)
-* [By-Value and By-Name Parameters in Scala](https://www.baeldung.com/scala/parameters-by-value-by-name)
-* [3 Fun Call-by-Name Tricks in Scala](https://rockthejvm.com/articles/3-call-by-name-tricks-in-scala)
 
 
 ### The @targetName annotation
 ```scala 3
-@targetName("Addition")
 ```
 Review
-* [The @targetName annotation](https://docs.scala-lang.org/scala3/reference/other-new-features/targetName.html)
-* [@targetName Annotation in Scala 3](https://www.baeldung.com/scala/targetname-annotation)
 
 ### Operators
 Scala 3 is a full OOP language, everything in Scala is an object, that's why there is no "embedded" primitive operators,
@@ -105,19 +96,16 @@ def +(that: Nat3): Nat3
 Review
 * [Scala 3 Reference. Rules for Operators](https://docs.scala-lang.org/scala3/reference/changed-features/operators.html)
 * [Scala 3 Book. Operators](https://docs.scala-lang.org/tour/operators.html)
-* [Introduction to Scala Operators](https://www.baeldung.com/scala/operators-intro)
 
 
 ### Extension methods
-Extension methods provides an extra functionality without adding inheritance, especially for the cases where it is 
+Extension methods provides an extra functionality without adding inheritance, especially for the cases where it is
 not possible to extend the classes.
 ```scala 3
 extension (value: Nat3)
 
-    @targetName("Addition")
     infix def +(that: Nat3): Nat3 = functions.addition(value, that)
-    
-    @targetName("Multiplication")
+
     infix def *(that: => Nat3): Nat3 = functions.multiplication(value, that)
 ```
 
@@ -125,12 +113,11 @@ Review
 * [Scala 3 Reference. Extension Methods](https://docs.scala-lang.org/scala3/reference/contextual/extension-methods.html)
 * [Scala 3 Book. Extension Methods](https://docs.scala-lang.org/scala3/book/ca-extension-methods.html)
 * [Extension Methods in Scala 3](https://www.baeldung.com/scala/extension-methods)
-* [Scala 3: Extension Methods Quickly Explained](https://rockthejvm.com/articles/scala-3-extension-methods)
 
 
 ### Folding
 
-Folds allows to process data recursively in a sequential data structures. 
+Folds allows to process data recursively in a sequential data structures.
 
 ```scala 3
   def fold(operation: (Nat3, Nat3) => Nat3, unit: Nat3)(list: List[Nat3]): Nat3 =
@@ -163,7 +150,7 @@ A property with generated arguments
     (value + Zero) == value
 ```
 
-`forAll` implicitly takes a certain `Arbitrary` instance typed with `Nat3` and uses it for value generation. 
+`forAll` implicitly takes a certain `Arbitrary` instance typed with `Nat3` and uses it for value generation.
 
 Compare to `Unit 1`
 ```scala 3
@@ -178,7 +165,7 @@ Review
 
 
 ### ScalaCheck generators
-`Gen` used as a schema to generate the values. `Gen` does not generate the values immediately, but provides a 
+`Gen` used as a schema to generate the values. `Gen` does not generate the values immediately, but provides a
 pattern which is used for generation.
 
 ```scala 3
