@@ -70,17 +70,14 @@ end ImplicationSpecification
 // Optional challenge
 object EquivalenceSpecification extends Properties("Equivalence"):
 
-  property("True ↔ True is True") = forAll: (value: Boolean) =>
-    True ↔ True == True
+  property("value ↔ value is True") = forAll: (value: Boolean) =>
+    (value ↔ value) == True
 
-  property("False ↔ False is True") = forAll: (value: Boolean) =>
-    False ↔ False == True
+  property("a ↔ b == b ↔ a") = forAll: (a: Boolean, b: Boolean) =>
+    (a ↔ b) == (b ↔ a)
 
-  property("True ↔ False is False") = forAll: (value: Boolean) =>
-    True ↔ False == False
-
-  property("False ↔ True is False") = forAll: (value: Boolean) =>
-    False ↔ True == False
+  property("a ↔ b ∧ b ↔ c ⇒ a ↔ c") = forAll: (a: Boolean, b: Boolean, c: Boolean) =>
+    ((a ↔ b) ∧ (b ↔ c)) → (a ↔ c) == True
 
 end EquivalenceSpecification
 
