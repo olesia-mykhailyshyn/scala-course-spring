@@ -53,8 +53,8 @@ object booleans:
 
     foldReq(list, unit)
 
-  val conjunctionOfElements: List[Boolean] => Boolean = list => fold((a, b) => conjunction(a, b), True)(list)
-  val disjunctionOfElements: List[Boolean] => Boolean = list => fold((a, b) => disjunction(a, b), False)(list)
+  val conjunctionOfElements: List[Boolean] => Boolean = list => fold((a, b) => a ∧ b, True)(list)
+  val disjunctionOfElements: List[Boolean] => Boolean = list => fold((a, b) => a ∨ b, False)(list)
 
   extension (booleans: List[Boolean])
     infix def conjunction: Boolean = conjunctionOfElements(booleans)
