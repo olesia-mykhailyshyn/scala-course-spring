@@ -74,10 +74,10 @@ object EquivalenceSpecification extends Properties("Equivalence"):
     (value ↔ value) == True
 
   property("a ↔ b == b ↔ a") = forAll: (a: Boolean, b: Boolean) =>
-    (a ↔ b) == (b ↔ a)
+    ((a ↔ b) == True) ==> ((b ↔ a) == True)
 
   property("a ↔ b ∧ b ↔ c ⇒ a ↔ c") = forAll: (a: Boolean, b: Boolean, c: Boolean) =>
-    ((a ↔ b) ∧ (b ↔ c)) → (a ↔ c) == True
+    ((a ↔ b) == True) ==> (((b ↔ c) == True) ==> ((a ↔ c) == True))
 
 end EquivalenceSpecification
 
