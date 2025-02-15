@@ -22,10 +22,10 @@ object booleans:
     (value1, value2) => if value1 == True then True else value2
 
   val implication: (Boolean, => Boolean) => Boolean =
-    (value1, value2) => if value1 == False then True else value2
+    (left, right) => negation(left) ∨ right
 
   val equivalence: (Boolean, => Boolean) => Boolean =
-    (value1, value2) => if value1 == value2 then True else False
+    (left, right) => (left → right) ∧ (right → left)
 
   extension (value: Boolean)
 
