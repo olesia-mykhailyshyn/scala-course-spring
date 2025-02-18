@@ -46,7 +46,7 @@ jobs:
               exit 1
             fi
           done
-          echo "List of all changed files for $branch_name is passed successfully"
+          echo "List of all changed files for $branch_name are passed successfully"
 
   compile:
     runs-on: ubuntu-latest
