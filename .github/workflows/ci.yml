@@ -36,11 +36,17 @@ jobs:
       - name: List all changed files
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-          PACKAGE_NAME: $(echo "kse.${{github.head_ref}}.challenge.*" | sed 's/-//g')
         run: |
+          branch_name=${{ github.head_ref }}
+          package_name="${branch_name//-/}"
+          
           for file in ${ALL_CHANGED_FILES}; do
-            echo "$file for ${PACKAGE_NAME} was changed"
+            if [[ "$file" != *"${package_name}"* ]]; then
+              echo "$file doesn't belong to $branch_name code changes"
+              exit 1
+            fi
           done
+          echo "List of all changed files for $branch_name is passed successfully"
 
   compile:
     runs-on: ubuntu-latest
