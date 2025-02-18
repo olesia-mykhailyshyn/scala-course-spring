@@ -37,8 +37,10 @@ jobs:
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
+          package_name = $(echo "kse.${{github.head_ref}}.challenge.*" | sed 's/-//g')
+          
           for file in ${ALL_CHANGED_FILES}; do
-            echo "$file was changed"
+            echo "$file for $package_name was changed"
           done
 
   compile:
