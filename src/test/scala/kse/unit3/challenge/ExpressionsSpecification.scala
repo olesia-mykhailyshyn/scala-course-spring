@@ -7,16 +7,16 @@ import org.scalacheck.Prop.{forAll, propBoolean}
 
 object BooleansSpecification extends Properties("Expressions"):
 
-  //include(BooleanEvaluationSpecification)
-  //include(VariableEvaluationSpecification)
-  //include(NegationEvaluationSpecification)
-  //include(ConjunctionEvaluationSpecification)
-  //include(DisjunctionEvaluationSpecification)
-  //include(ImplicationEvaluationSpecification)
-//  include(EquivalenceEvaluationSpecification)
-//  include(BooleanSubstitutionSpecification)
-//  include(VariableSubstitutionSpecification)
-//  include(ExpressionSubstitutionSpecification)
+  include(BooleanEvaluationSpecification)
+  include(VariableEvaluationSpecification)
+  include(NegationEvaluationSpecification)
+  include(ConjunctionEvaluationSpecification)
+  include(DisjunctionEvaluationSpecification)
+  include(ImplicationEvaluationSpecification)
+  include(EquivalenceEvaluationSpecification)
+  include(BooleanSubstitutionSpecification)
+  include(VariableSubstitutionSpecification)
+  include(ExpressionSubstitutionSpecification)
 
 end BooleansSpecification
 
@@ -56,7 +56,7 @@ object ConjunctionEvaluationSpecification extends Properties("Conjunction Evalua
     (True ∧ expression).evaluate == expression.evaluate
 
   property("expression ∧ True should be evaluated to expression evaluation") = forAll: (expression: Expression) =>
-    (expression ∧ True).evaluate == expression
+    (expression ∧ True).evaluate == expression.evaluate
 
   property("False ∧ expression should be evaluated to False") = forAll: (expression: Expression) =>
     (False ∧ expression).evaluate == False
@@ -65,7 +65,7 @@ object ConjunctionEvaluationSpecification extends Properties("Conjunction Evalua
     (expression ∧ False).evaluate == False
 
   property("left ∧ left should be correctly evaluated") = forAll: (left: Expression) =>
-    (left ∧ left).evaluate == left
+    (left ∧ left).evaluate == left.evaluate // Виправлено
 
 end ConjunctionEvaluationSpecification
 
@@ -81,10 +81,10 @@ object DisjunctionEvaluationSpecification extends Properties("Disjunction Evalua
     (False ∨ expression).evaluate == expression.evaluate
 
   property("expression ∨ False should be evaluated to expression evaluation") = forAll: (expression: Expression) =>
-    (expression ∨ False).evaluate == expression
+    (expression ∨ False).evaluate == expression.evaluate
 
   property("left ∨ left should be correctly evaluated") = forAll: (left: Expression) =>
-    (left ∨ left).evaluate == left
+    (left ∨ left).evaluate == left.evaluate
 
 end DisjunctionEvaluationSpecification
 
@@ -110,9 +110,9 @@ object EquivalenceEvaluationSpecification extends Properties("Equivalence Evalua
     (left ↔ right).evaluate == (right ↔ left).evaluate
 
   property("Transitivity") = forAll: (a: Boolean, b: Boolean, c: Boolean) =>
-    ((a ↔ b) ∧ (b ↔ c)).evaluate == (a ↔ c).evaluate
+    ((a ↔ b).evaluate == True && (b ↔ c).evaluate == True) ==> ((a ↔ c).evaluate == True)
 
-  property("left ↔ left should be correctly evaluated") = forAll: (left: Expression, right: Expression) =>
+  property("left ↔ right should be correctly evaluated") = forAll: (left: Expression, right: Expression) =>
     (left ↔ right).evaluate == Equivalence(left.evaluate, right.evaluate).evaluate
 
 end EquivalenceEvaluationSpecification
