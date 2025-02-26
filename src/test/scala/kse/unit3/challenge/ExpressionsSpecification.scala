@@ -64,8 +64,8 @@ object ConjunctionEvaluationSpecification extends Properties("Conjunction Evalua
   property("expression ∧ False should be evaluated to False") = forAll: (expression: Expression) =>
     (expression ∧ False).evaluate == False
 
-  property("left ∧ left should be correctly evaluated") = forAll: (left: Expression) =>
-    (left ∧ left).evaluate == left.evaluate // Виправлено
+  property("left ∧ right should be correctly evaluated") = forAll: (left: Expression, right: Expression) =>
+    (left ∧ right).evaluate == (left.evaluate ∧ right.evaluate).evaluate
 
 end ConjunctionEvaluationSpecification
 

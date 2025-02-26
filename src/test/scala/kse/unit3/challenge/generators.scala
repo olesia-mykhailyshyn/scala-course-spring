@@ -14,15 +14,33 @@ object generators:
     for name <- genVariableName
     yield Variable(name)
 
-  val genNegation: Gen[Negation] = for expression <- genExpression yield Negation(expression)
+  val genNegation: Gen[Negation] =
+    for expression <- genExpression
+    yield Negation(expression)
 
-  val genConjunction: Gen[Conjunction] = for left <- genExpression; right <- genExpression yield Conjunction(left, right)
+  val genConjunction: Gen[Conjunction] =
+    for
+      left  <- genExpression;
+      right <- genExpression
+    yield Conjunction(left, right)
 
-  val genDisjunction: Gen[Disjunction] = for left <- genExpression; right <- genExpression yield Disjunction(left, right)
+  val genDisjunction: Gen[Disjunction] =
+    for
+      left  <- genExpression;
+      right <- genExpression
+    yield Disjunction(left, right)
 
-  val genImplication: Gen[Implication] = for left <- genExpression; right <- genExpression yield Implication(left, right)
+  val genImplication: Gen[Implication] =
+    for
+      left  <- genExpression;
+      right <- genExpression
+    yield Implication(left, right)
 
-  val genEquivalence: Gen[Equivalence] = for left <- genExpression; right <- genExpression yield Equivalence(left, right)
+  val genEquivalence: Gen[Equivalence] =
+    for
+      left  <- genExpression;
+      right <- genExpression
+    yield Equivalence(left, right)
 
   lazy val genExpression: Gen[Expression] =
     Gen.frequency(
