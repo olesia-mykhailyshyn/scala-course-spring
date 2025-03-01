@@ -76,7 +76,7 @@ object expressions:
   case class Equivalence(left: Expression, right: Expression) extends Expression:
 
     def evaluate: Expression = Conjunction(Implication(left, right), Implication(right, left)).evaluate
-    
+
     def substitute(variable: Variable, substitution: Expression): Expression =
       Equivalence(left.substitute(variable, substitution), right.substitute(variable, substitution))
 
