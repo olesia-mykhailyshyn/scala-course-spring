@@ -43,7 +43,6 @@ object expressions:
         case (False, _) | (_, False) => False
         case (True, expr)            => expr
         case (expr, True)            => expr
-        case (l, r) if l == r        => l.evaluate
         case (l, r)                  => Conjunction(l, r)
 
     def substitute(variable: Variable, substitution: Expression): Expression =
@@ -58,7 +57,6 @@ object expressions:
         case (True, _) | (_, True) => True
         case (False, expr)         => expr
         case (expr, False)         => expr
-        case (l, r) if l == r      => l.evaluate
         case (l, r)                => Disjunction(l, r)
 
     def substitute(variable: Variable, substitution: Expression): Expression =
@@ -68,11 +66,7 @@ object expressions:
 
   case class Implication(left: Expression, right: Expression) extends Expression:
 
-    def evaluate: Expression = (left.evaluate, right.evaluate) match
-      case (False, _)       => True
-      case (True, r)        => r
-      case (l, r) if l == r => True
-      case (l, r)           => Implication(l, r)
+    def evaluate: Expression = Disjunction(Negation(left.evaluate), right.evaluate).evaluate
 
     def substitute(variable: Variable, substitution: Expression): Expression =
       Implication(left.substitute(variable, substitution), right.substitute(variable, substitution))
