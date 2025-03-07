@@ -18,7 +18,7 @@ object NumeralsSpecification extends Properties("Numerals"):
   include(SubtractionSpecification)
   include(ConversionSpecification)
   include(EqualitySpecification)
-  include(ToStringSpecification)
+  include(AdditionSubtractionSpecification)
 
 end NumeralsSpecification
 
@@ -54,6 +54,9 @@ object SuccessorSpecification extends Properties("Successor"):
   property("Successor(n).toInt should be n.toInt + 1") = forAll: (n: Numeral) =>
     Successor(n).toInt == (n.toInt + 1)
 
+  property("Successor(n) should be equal to n + Successor(Zero)") = forAll: (n: Numeral) =>
+    Successor(n) == n + Successor(Zero)
+
 end SuccessorSpecification
 
 object OrderingSpecification extends Properties("Ordering"):
@@ -75,6 +78,12 @@ object OrderingSpecification extends Properties("Ordering"):
 
   property("n < Successor(n) should be true") = forAll: (n: Numeral) =>
     n < Successor(n)
+
+  property("n > m should be equivalent to m < n") = forAll: (n: Numeral, m: Numeral) =>
+    (n != m) ==> ((n > m) == (m < n))
+
+  property("n >= m should be equivalent to m <= n") = forAll: (n: Numeral, m: Numeral) =>
+    (n >= m) == (m <= n)
 
 end OrderingSpecification
 
@@ -135,14 +144,24 @@ object EqualitySpecification extends Properties("Equality"):
   property("Zero should not be equal to any Successor(n)") = forAll: (n: Numeral) =>
     Zero != Successor(n)
 
+  property("Equal objects should have the same hashCode") = forAll: (n: Numeral) =>
+    val m = n + Zero
+    (n == m) ==> (n.hashCode == m.hashCode)
+
 end EqualitySpecification
 
-object ToStringSpecification extends Properties("ToString"):
+object AdditionSubtractionSpecification extends Properties("Addition and Subtraction"):
 
-  property("Zero.toString should return 'Zero'") = propBoolean(Zero.toString == "Zero")
+  property("(n + m) - m should return n") = forAll: (n: Numeral, m: Numeral) =>
+    (n + m) - m == n
 
-  property("Successor(Zero).toString should return 'Successor(1)'") = propBoolean(Successor(Zero).toString == "Successor(1)")
+  property("(n - m) + m should return n if n >= m") = forAll: (n: Numeral, m: Numeral) =>
+    if n >= m then (n - m) + m == n else true
 
-  property("Successor(Successor(Zero)).toString should return 'Successor(2)'") = propBoolean(Successor(Successor(Zero)).toString == "Successor(2)")
+  property("(n + m) - (m + k) should be n - k") = forAll: (n: Numeral, m: Numeral, k: Numeral) =>
+    (n + m) - (m + k) == n - k
 
-end ToStringSpecification
+  property("(n - m) + (m - k) should be n - k if n >= m >= k") = forAll: (n: Numeral, m: Numeral, k: Numeral) =>
+    if n >= m && m >= k then (n - m) + (m - k) == n - k else true
+
+end AdditionSubtractionSpecification

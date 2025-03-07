@@ -13,34 +13,26 @@ object numerals:
     def successor: Numeral = Successor(this)
 
     @targetName("greater than")
-    infix def >(that: Numeral): Boolean = (this, that) match
-      case (_, Zero)                    => !this.isZero
-      case (Zero, _)                    => false
-      case (Successor(n), Successor(m)) => n > m
+    infix def >(that: Numeral): Boolean
 
     @targetName("greater or equal to")
-    infix def >=(that: Numeral): Boolean = (this == that) || (this > that)
+    infix def >=(that: Numeral): Boolean = this == that || this > that
 
     @targetName("less than")
-    infix def <(that: Numeral): Boolean = (this != that) && !(this > that)
+    infix def <(that: Numeral): Boolean = !(this > that)
 
     @targetName("less or equal to")
-    infix def <=(that: Numeral): Boolean = (this == that) || !(this > that)
+    infix def <=(that: Numeral): Boolean = !(this > that)
 
     @targetName("addition")
-    infix def +(that: Numeral): Numeral = that match
-      case Zero         => this
-      case Successor(n) => Successor(this + n)
+    infix def +(that: Numeral): Numeral
 
     @targetName("subtraction")
-    infix def -(that: Numeral): Numeral = (this, that) match
-      case (_, Zero)                    => this
-      case (Zero, _)                    => Zero
-      case (Successor(n), Successor(m)) => n - m
+    infix def -(that: Numeral): Numeral
 
     def toInt: Int
 
-    override def toString: String = s"Nat(${this.predecessor})"
+    override def toString: String = s"Nat(${predecessor})"
 
   type Zero = Zero.type
 
@@ -59,13 +51,13 @@ object numerals:
     @targetName("subtraction")
     override infix def -(that: Numeral): Numeral = Zero
 
-    override def toInt: Int = 0
+    def toInt: Int = 0
 
-    override def toString: String = "Zero"
+    override def toString: String = toInt.toString
 
-    override def equals(obj: Any): Boolean = obj match
-      case that: Zero.type => true
-      case _               => false
+    override def equals(obj: Any): Boolean = obj.isInstanceOf[Zero]
+
+    override def hashCode: Int = 0
 
   object Successor:
     def unapply(successor: Successor): Option[Numeral] = Option(successor.predecessor)
@@ -91,8 +83,10 @@ object numerals:
 
     override def toInt: Int = 1 + n.toInt
 
-    override def toString: String = s"Successor(${this.toInt})"
+    override def toString: String = "Successor(" + toInt.toString + ")"
 
     override def equals(obj: Any): Boolean = obj match
-      case s: Successor => this.toInt == s.toInt
-      case _            => false
+      case that: Successor => this.predecessor == that.predecessor
+      case _               => false
+
+    override def hashCode: Int = 31 * predecessor.hashCode()
