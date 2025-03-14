@@ -9,8 +9,8 @@ import org.scalacheck.Properties
 
 object NumeralSetSpecification extends Properties("NumeralSet"):
 
-  //include(EmptySpecification)
-  //include(NonEmptySpecification)
+  include(EmptySpecification)
+  include(NonEmptySpecification)
   include(SetSpecification)
 
 end NumeralSetSpecification
@@ -61,7 +61,8 @@ object SetSpecification extends Properties("Set laws"):
         set.forAll(_ != numeral)
       }
 
-  property("If a set does not contain a given element then there is no element in the set equal to the given element") = ???
+  property("If a set does not contain a given element then there is no element in the set equal to the given element") = forAll:
+    (set: NumeralSet, numeral: Numeral) => !set.contains(numeral) ==> { !set.exists(_ == numeral) }
 
   property("If a given element is added to a set then there is an element in the set equals to the give element") = forAll:
     (set: NumeralSet, numeral: Numeral) =>

@@ -84,16 +84,17 @@ object set:
     infix def remove(x: Numeral): NumeralSet = (left, right) match
       case _ if x < element => NonEmpty(left.remove(x), element, right)
       case _ if x > element => NonEmpty(left, element, right.remove(x))
-      case (Empty, Empty) => Empty
-      case (Empty, _) => right
-      case (_, Empty) => left
-      case _ => NonEmpty(left, right.findMinElement, right.remove(right.findMinElement))
+      case (Empty, Empty)   => Empty
+      case (Empty, _)       => right
+      case (_, Empty)       => left
+      case _                => NonEmpty(left, right.findMinElement, right.remove(right.findMinElement))
 
     extension (set: NumeralSet)
+
       def findMinElement: Numeral = set match
         case NonEmpty(Empty, element, _) => element
-        case NonEmpty(left, _, _) => left.findMinElement
-        case Empty => throw new NoSuchElementException("Empty set has no minimum")
+        case NonEmpty(left, _, _)        => left.findMinElement
+        case Empty                       => throw new NoSuchElementException("Empty set has no minimum")
 
     @targetName("union")
     infix def ∪(that: NumeralSet): NumeralSet =
@@ -113,7 +114,7 @@ object set:
 
     override def equals(obj: Any): Boolean = obj match
       case NonEmpty(l, e, r) => l == left && e == element && r == right
-      case _ => false
+      case _                 => false
 
   end NonEmpty
 
