@@ -78,18 +78,12 @@ object SetSpecification extends Properties("Set laws"):
   property("Inclusion should be idempotent") = forAll: (set: NumeralSet, numeral: Numeral) =>
     set.include(numeral).include(numeral) == set.include(numeral)
 
-//  // Optional
-//  // Uncomment if needed
   property("If a given element is removed from a set then all elements of the set should not be equals to the given element") = forAll:
     (set: NumeralSet, numeral: Numeral) => set.remove(numeral).forAll(x => x != numeral)
 
-//  // Optional
-//  // Uncomment if needed
   property("If a given element is removed from a set then the set should not contain the given element") = forAll: (set: NumeralSet, numeral: Numeral) =>
     !set.remove(numeral).contains(numeral)
 
-//  // Optional
-//  // Uncomment if needed
   property("If a given new element is added to a set and then removed from the set then the set should not be changed") = forAll:
     (set: NumeralSet, numeral: Numeral) =>
       !set.contains(numeral) ==> {
@@ -105,28 +99,24 @@ object SetSpecification extends Properties("Set laws"):
   property("An intersections of two given sets should contain the same elements from both sets") = forAll: (left: NumeralSet, right: NumeralSet) =>
     (left ∩ right).forAll(element => left.contains(element) && right.contains(element))
 
-//  // Optional.
-//  // Uncomment if needed
   property("A difference of two given sets should contain elements from a base set but should not contain elements from an exclusion set") = forAll:
     (left: NumeralSet, right: NumeralSet) =>
       val difference = left \ right
       difference.forAll(x => left.contains(x) && !right.contains(x))
 
-//  // Optional.
-////  // Uncomment if needed
-//  property("A disjunctive union of two given sets should include elements from a union of the sets but exclude elements from an intersection of the sets") =
-//    forAll: (left: NumeralSet, right: NumeralSet) =>
-//      val symmetricDifference = left ∆ right
-//      val union               = left ∪ right
-//      val intersection        = left ∩ right
-//
-//      symmetricDifference == (union \ intersection)
+  property("A disjunctive union of two given sets should include elements from a union of the sets but exclude elements from an intersection of the sets") =
+    forAll: (left: NumeralSet, right: NumeralSet) =>
+      val symmetricDifference = left ∆ right
+      val union               = left ∪ right
+      val intersection        = left ∩ right
+
+      symmetricDifference == (union \ intersection)
 
   property("Union left unit") = forAll: (set: NumeralSet) =>
     (Empty ∪ set) == set
 
-//  property("Union right unit") = forAll: (set: NumeralSet) =>
-//    (set ∪ Empty) == set
+  property("Union right unit") = forAll: (set: NumeralSet) =>
+    (set ∪ Empty) == set
 
   property("Intersection left zero") = forAll: (set: NumeralSet) =>
     (Empty ∩ set) == Empty
@@ -134,25 +124,17 @@ object SetSpecification extends Properties("Set laws"):
   property("Intersection right zero") = forAll: (set: NumeralSet) =>
     (set ∩ Empty) == Empty
 
-//  // Optional
-//  // Uncomment if needed
   property("Difference left zero") = forAll: (set: NumeralSet) =>
     (Empty \ set) == Empty
 
-//  // Optional
-//  // Uncomment if needed
   property("Difference right unit") = forAll: (set: NumeralSet) =>
     (set \ Empty) == set
 
-//  // Optional
-//  // Uncomment if needed
   property("Symmetric difference left unit") = forAll: (set: NumeralSet) =>
     (Empty ∆ set) == set
 
-//  // Optional
-//  // Uncomment if needed
-//  property("Symmetric difference right unit") = forAll: (set: NumeralSet) =>
-//    (set ∆ Empty) == set
+  property("Symmetric difference right unit") = forAll: (set: NumeralSet) =>
+    (set ∆ Empty) == set
 
   property("Union should be idempotent") = forAll: (set: NumeralSet) =>
     (set ∪ set) == set
@@ -160,31 +142,27 @@ object SetSpecification extends Properties("Set laws"):
   property("Intersection should be idempotent") = forAll: (set: NumeralSet) =>
     (set ∩ set) == set
 
-//  // Optional
-//  // Uncomment if needed
   property("Difference should be self-inverted") = forAll: (set: NumeralSet) =>
     (set \ set) == Empty
 
-//  property("Union should be commutative") = forAll: (left: NumeralSet, right: NumeralSet) =>
-//    (left ∪ right) == (right ∪ left)
-//
-//  property("Intersection should be commutative") = forAll: (left: NumeralSet, right: NumeralSet) =>
-//    (left ∩ right) == (right ∩ left)
-//
-//  property("Union should be associative") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
-//    ((a ∪ b) ∪ c) == (a ∪ (b ∪ c))
-//
+  property("Union should be commutative") = forAll: (left: NumeralSet, right: NumeralSet) =>
+    (left ∪ right) == (right ∪ left)
+
+  property("Intersection should be commutative") = forAll: (left: NumeralSet, right: NumeralSet) =>
+    (left ∩ right) == (right ∩ left)
+
+  property("Union should be associative") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
+    ((a ∪ b) ∪ c) == (a ∪ (b ∪ c))
+
   property("Intersection should be associative") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
     ((a ∩ b) ∩ c) == (a ∩ (b ∩ c))
 
-//  property("Union should be distributive over intersection") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
-//    (a ∪ (b ∩ c)) == ((a ∪ b) ∩ (a ∪ c))
-//
-//  property("Intersection should be distributive over union") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
-//    (a ∩ (b ∪ c)) == ((a ∩ b) ∪ (a ∩ c))
-//
-//  // Optional
-//  // Uncomment if needed
+  property("Union should be distributive over intersection") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
+    (a ∪ (b ∩ c)) == ((a ∪ b) ∩ (a ∪ c))
+
+  property("Intersection should be distributive over union") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
+    (a ∩ (b ∪ c)) == ((a ∩ b) ∪ (a ∩ c))
+
   property("Difference should be distributive over intersection") = forAll: (a: NumeralSet, b: NumeralSet, c: NumeralSet) =>
     (a ∩ (b \ c)) == ((a ∩ b) \ (a ∩ c))
 

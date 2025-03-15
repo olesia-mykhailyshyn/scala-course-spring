@@ -59,40 +59,56 @@ object set:
 
     override def equals(obj: Any): Boolean = obj.isInstanceOf[Empty]
 
+    override def hashCode: Int = 0
+
   end Empty
 
   case class NonEmpty(left: NumeralSet, element: Numeral, right: NumeralSet) extends NumeralSet:
 
-    infix def forAll(predicate: Numeral => Boolean): Boolean = predicate(element) && left.forAll(predicate) && right.forAll(predicate)
+    infix def forAll(predicate: Numeral => Boolean): Boolean =
+      predicate(element) && left.forAll(predicate) && right.forAll(predicate)
 
-    infix def exists(predicate: Numeral => Boolean): Boolean = predicate(element) || left.exists(predicate) || right.exists(predicate)
+    infix def exists(predicate: Numeral => Boolean): Boolean =
+      predicate(element) || left.exists(predicate) || right.exists(predicate)
 
-    infix def contains(x: Numeral): Boolean = if x == element then true else if x < element then left.contains(x) else right.contains(x)
+    infix def contains(x: Numeral): Boolean =
+      if x == element then true
+      else if x < element then left.contains(x)
+      else right.contains(x)
 
-    infix def include(x: Numeral): NumeralSet = if x == element then this
-    else if x < element then NonEmpty(left.include(x), element, right)
-    else NonEmpty(left, element, right.include(x))
+    infix def include(x: Numeral): NumeralSet =
+      if x == element then this
+      else if x < element then NonEmpty(left.include(x), element, right)
+      else NonEmpty(left, element, right.include(x))
 
-    infix def remove(x: Numeral): NumeralSet = if x == element then left ∪ right
-    else if x < element then NonEmpty(left.remove(x), element, right)
-    else NonEmpty(left, element, right.remove(x))
+    infix def remove(x: Numeral): NumeralSet =
+      if x == element then left ∪ right
+      else if x < element then NonEmpty(left.remove(x), element, right)
+      else NonEmpty(left, element, right.remove(x))
 
     @targetName("union")
-    infix def ∪(that: NumeralSet): NumeralSet = left ∪ (right ∪ that).include(element)
+    infix def ∪(that: NumeralSet): NumeralSet =
+      left ∪ (right ∪ that).include(element)
 
     @targetName("intersection")
     infix def ∩(that: NumeralSet): NumeralSet =
-      if that.contains(element) then NonEmpty(left ∩ that, element, right ∩ that) else left ∩ that ∪ right ∩ that
+      if that.contains(element) then NonEmpty(left ∩ that, element, right ∩ that)
+      else (left ∩ that) ∪ (right ∩ that)
 
     @targetName("difference")
     infix def \(that: NumeralSet): NumeralSet =
-      if that.contains(element) then left \ that ∪ right \ that else NonEmpty(left \ that, element, right \ that)
+      if that.contains(element) then (left \ that) ∪ (right \ that)
+      else NonEmpty(left \ that, element, right \ that)
 
     override def toString: String = s"[$left - [$element] - $right]"
 
     override def equals(obj: Any): Boolean = obj match
-      case NonEmpty(l, e, r) => left == l && element == e && right == r
-      case _                 => false
+      case that: NumeralSet =>
+        this.forAll(x => that.contains(x)) && that.forAll(x => this.contains(x))
+      case _ => false
+
+    override def hashCode: Int =
+      element.hashCode + left.hashCode + right.hashCode
 
   end NonEmpty
 
