@@ -44,7 +44,7 @@ object set:
 
     infix def include(x: Numeral): NumeralSet = NonEmpty(Empty, x, Empty)
 
-    infix def remove(x: Numeral): NumeralSet = this
+    infix def remove(x: Numeral): NumeralSet = Empty
 
     @targetName("union")
     infix def ∪(that: NumeralSet): NumeralSet = that
@@ -103,8 +103,8 @@ object set:
     override def toString: String = s"[$left - [$element] - $right]"
 
     override def equals(obj: Any): Boolean = obj match
-      case that: NumeralSet =>
-        this.forAll(x => that.contains(x)) && that.forAll(x => this.contains(x))
+      case set: NumeralSet =>
+        this.forAll(set.contains) && set.forAll(x => this.exists(_ == x))
       case _ => false
 
     override def hashCode: Int =
