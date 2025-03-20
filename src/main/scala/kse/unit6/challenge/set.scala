@@ -15,7 +15,6 @@ object set:
 
     infix def include[B >: A: Order](x: B): Set[B]
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     infix def remove[B >: A: Order](x: B): Set[B]
 
     @targetName("union")
@@ -24,11 +23,9 @@ object set:
     @targetName("intersection")
     infix def ∩[B >: A: Order](that: Set[B]): Set[B]
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     @targetName("difference")
     infix def \[B >: A: Order](that: Set[B]): Set[B]
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     @targetName("symmetric difference")
     infix def ∆[B >: A: Order](that: Set[B]): Set[B] = (this \ that) ∪ (that \ this)
 
@@ -36,7 +33,6 @@ object set:
 
   type Empty = Empty.type
 
-  // TODO: Remind about type system
   case object Empty extends Set[Nothing]:
 
     infix def forAll(predicate: Nothing => Boolean): Boolean = true
@@ -47,7 +43,6 @@ object set:
 
     infix def include[B: Order](x: B): Set[B] = NonEmpty(Empty, x, Empty)
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     infix def remove[B: Order](x: B): Set[B] = Empty
 
     @targetName("union")
@@ -56,7 +51,6 @@ object set:
     @targetName("intersection")
     infix def ∩[B: Order](that: Set[B]): Set[B] = Empty
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     @targetName("difference")
     infix def \[B: Order](that: Set[B]): Set[B] = Empty
 
@@ -82,7 +76,6 @@ object set:
       else if ord.compare(x, element) < 0 then NonEmpty(left.include(x), element, right)
       else NonEmpty(left, element, right.include(x))
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     infix def remove[B >: A: Order](x: B): Set[B] =
       if x === element then left ∪ right
       else if x < element then NonEmpty(left.remove(x), element, right)
@@ -96,7 +89,6 @@ object set:
       if that.contains(element) then NonEmpty(left ∩ that, element, right ∩ that)
       else (left ∩ that) ∪ (right ∩ that)
 
-    // Optional from the Unit 5. If you haven't implement it in Unit 5 then skip it
     @targetName("difference")
     infix def \[B >: A: Order](that: Set[B]): Set[B] = (left \ that) ∪ (right \ that)
 

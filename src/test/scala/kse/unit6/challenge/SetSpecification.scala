@@ -2,7 +2,6 @@ package kse.unit6.challenge
 
 import kse.unit4.challenge.generators.given
 import kse.unit4.challenge.numerals.Numeral
-import kse.unit6.algebra.{*, given}
 import kse.unit6.challenge.generators.given
 import kse.unit6.challenge.order.{*, given}
 import kse.unit6.challenge.set.*
@@ -45,7 +44,7 @@ object NonEmptySpecification extends Properties("Non-empty set laws"):
     !nonEmpty.exists(_ => false)
 
   property("Single-element set should contain an element") = forAll: (numeral: Numeral) =>
-    ???
+    NonEmpty(Empty, numeral, Empty).exists(_ == numeral)
 
 end NonEmptySpecification
 
@@ -72,18 +71,12 @@ object SetSpecification extends Properties("Set laws"):
   property("Inclusion should be idempotent") = forAll: (set: Set[Numeral], numeral: Numeral) =>
     set.include(numeral).include(numeral) == set.include(numeral)
 
-  // Optional
-  // Uncomment if needed
   property("If a given element is removed from a set then all elements of the set should not be equals to the given element") = forAll:
     (set: Set[Numeral], numeral: Numeral) => !set.contains(numeral) || set.remove(numeral).forAll(_ != numeral)
 
-  // Optional
-  // Uncomment if needed
   property("If a given element is removed from a set then the set should not contain the given element") = forAll: (set: Set[Numeral], numeral: Numeral) =>
     !set.contains(numeral) || !set.remove(numeral).contains(numeral)
 
-  // Optional
-  // Uncomment if needed
   property("If a given new element is added to a set and then removed from the set then the set should not be changed") = forAll:
     (set: Set[Numeral], numeral: Numeral) => !set.contains(numeral) || set.include(numeral).remove(numeral) == set
 
@@ -91,23 +84,18 @@ object SetSpecification extends Properties("Set laws"):
     set.include(numeral).include(numeral).include(numeral).include(numeral) == set.include(numeral)
 
   property("A union of two given sets should contain the elements from both sets") = forAll: (left: Set[Numeral], right: Set[Numeral]) =>
-    ???
+    left.forAll(e => (left ∪ right).exists(_ == e)) && right.forAll(e => (left ∪ right).exists(_ == e))
 
   property("An intersections of two given sets should contain the same elements from both sets") = forAll: (left: Set[Numeral], right: Set[Numeral]) =>
     (left ∩ right).forAll(element => left.contains(element) && right.contains(element))
 
-  // Optional.
-  // Uncomment if needed
   property("A difference of two given sets should contain elements from a base set but should not contain elements from an exclusion set") = forAll:
     (left: Set[Numeral], right: Set[Numeral]) => (left \ right).forAll(element => left.contains(element) && !right.contains(element))
 
-  // Optional.
-  // Uncomment if needed
   property("A disjunctive union of two given sets should include elements from a union of the sets but exclude elements from an intersection of the sets") =
     forAll: (left: Set[Numeral], right: Set[Numeral]) =>
       (left ∆ right).forAll(element => (left ∪ right).contains(element) && !(left ∩ right).contains(element))
 
-  // TODO: The next part should be implemented by students
   property("Union left unit") = forAll: (set: Set[Numeral]) =>
     (Empty ∪ set) == set
 
@@ -120,34 +108,24 @@ object SetSpecification extends Properties("Set laws"):
   property("Intersection right zero") = forAll: (set: Set[Numeral]) =>
     (set ∩ Empty) == Empty
 
-  // Optional
-  // Uncomment if needed
   property("Difference left zero") = forAll: (set: Set[Numeral]) =>
     (Empty \ set) == Empty
 
-  // Optional
-  // Uncomment if needed
   property("Difference right unit") = forAll: (set: Set[Numeral]) =>
-    ???
+    (set \ Empty) == Empty
 
-  // Optional
-  // Uncomment if needed
   property("Symmetric difference left unit") = forAll: (set: Set[Numeral]) =>
-    ???
+    (Empty ∆ set) == Empty
 
-  // Optional
-  // Uncomment if needed
   property("Symmetric difference right unit") = forAll: (set: Set[Numeral]) =>
-    ???
+    (set ∆ Empty) == Empty
 
   property("Union should be idempotent") = forAll: (set: Set[Numeral]) =>
     (set ∪ set) == set
 
   property("Intersection should be idempotent") = forAll: (set: Set[Numeral]) =>
-    ???
+    (set ∩ set).forAll(e => set.exists(_ == e))
 
-  // Optional
-  // Uncomment if needed
   property("Difference should be self-inverted") = forAll: (set: Set[Numeral]) =>
     (set \ set) == Empty
 
@@ -164,13 +142,12 @@ object SetSpecification extends Properties("Set laws"):
     (a ∩ b) ∩ c == a ∩ (b ∩ c)
 
   property("Union should be distributive over intersection") = forAll: (a: Set[Numeral], b: Set[Numeral], c: Set[Numeral]) =>
-    ???
+    (a ∩ (b ∪ c)).forAll(((a ∩ b) ∪ (a ∩ c)).contains) &&
+      ((a ∩ b) ∪ (a ∩ c)).forAll((a ∩ (b ∪ c)).contains)
 
   property("Intersection should be distributive over union") = forAll: (a: Set[Numeral], b: Set[Numeral], c: Set[Numeral]) =>
     (a ∩ (b ∪ c)) == (a ∩ b) ∪ (a ∩ c)
 
-  // Optional
-  // Uncomment if needed
   property("Difference should be distributive over intersection") = forAll: (a: Set[Numeral], b: Set[Numeral], c: Set[Numeral]) =>
     (a \ (b ∩ c)) == (a \ b) ∪ (a \ c)
 
