@@ -4,6 +4,5 @@ import org.scalacheck.*
 
 object generators:
   lazy val genSmallPositiveNumber: Gen[BigInt] = Gen.chooseNum(1, 5)
-  
-  given Arbitrary[BigInt] = Arbitrary(genSmallPositiveNumber)
 
+  given Arbitrary[BigInt] = Arbitrary(genSmallPositiveNumber)

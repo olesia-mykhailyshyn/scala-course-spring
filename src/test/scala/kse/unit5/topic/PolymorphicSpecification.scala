@@ -1,12 +1,9 @@
 package kse.unit5.topic
 
-import kse.unit5.topic.YCombinatorSpecification
-import kse.unit5.challenge.EmptySpecification.property
 import kse.unit5.topic.generators.given
 import kse.unit5.topic.polymorphic.*
 import org.scalacheck.Prop.{forAll, propBoolean}
 import org.scalacheck.Properties
-
 
 object PolymorphicSpecification extends Properties("Polymorphic"):
 
@@ -29,7 +26,6 @@ object IdentitySpecification extends Properties("Identity"):
 
 end IdentitySpecification
 
-
 object CompositionSpecification extends Properties("Composition"):
 
   property("Polymorphic composition of function should be correctly evaluated") = forAll: (f: Int => String, g: Boolean => Int, x: Boolean) =>
@@ -49,4 +45,3 @@ object YCombinatorSpecification extends Properties("Y-combinator"):
     Y(almostFactorialFunction)(value) == (0 to value.toInt).fold(1)((acc, value) => if value == 0 then acc else acc * value)
 
 end YCombinatorSpecification
-
