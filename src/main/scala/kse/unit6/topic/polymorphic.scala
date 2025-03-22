@@ -1,4 +1,4 @@
-package kse.unit5.topic
+package kse.unit6.topic
 
 object polymorphic extends App:
 
