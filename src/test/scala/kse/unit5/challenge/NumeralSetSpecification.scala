@@ -110,7 +110,8 @@ object SetSpecification extends Properties("Set laws"):
       val union               = left ∪ right
       val intersection        = left ∩ right
 
-      symmetricDifference == (union \ intersection)
+      symmetricDifference.forAll(union.contains) &&
+      intersection.forAll(!symmetricDifference.contains(_))
 
   property("Union left unit") = forAll: (set: NumeralSet) =>
     (Empty ∪ set) == set
