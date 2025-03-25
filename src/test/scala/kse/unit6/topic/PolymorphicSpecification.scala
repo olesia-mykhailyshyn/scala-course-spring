@@ -1,7 +1,7 @@
-package kse.unit5.topic
+package kse.unit6.topic
 
-import kse.unit5.topic.generators.given
-import kse.unit5.topic.polymorphic.*
+import kse.unit6.topic.generators.given
+import kse.unit6.topic.polymorphic.*
 import org.scalacheck.Prop.{forAll, propBoolean}
 import org.scalacheck.Properties
 
