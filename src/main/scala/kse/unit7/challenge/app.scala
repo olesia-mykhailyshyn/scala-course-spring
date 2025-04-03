@@ -11,11 +11,10 @@ object app:
       userProfile <- getUserProfile(apiKey)
       posts       <- getPosts(userProfile.userId)
       postViews <- posts.foldLeft(Try(List.empty[PostView])) { (accTry, post) =>
-        accTry flatMap { acc =>
-          getPostView(post) map { view =>
-            acc :+ view
-          }
-        }
+        for
+          acc  <- accTry
+          view <- getPostView(post)
+        yield acc :+ view
       }
     yield postViews
 
