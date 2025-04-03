@@ -1,5 +1,6 @@
 package kse.unit7.topic
 
+import kse.unit7.topic.adt.Option
 import kse.unit7.topic.model.{ApiKey, BankAccount, Client, Transaction}
 import kse.unit7.topic.model.BankAccount.BankAccountId
 import kse.unit7.topic.model.Client.ClientId
