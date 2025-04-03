@@ -58,6 +58,8 @@ object set:
 
     override def equals(obj: Any): Boolean = obj.isInstanceOf[Empty]
 
+    override def hashCode(): Int = 0
+
   end Empty
 
   case class NonEmpty[A](left: Set[A], element: A, right: Set[A]) extends Set[A]:
@@ -92,11 +94,16 @@ object set:
     @targetName("difference")
     infix def \[B >: A: Order](that: Set[B]): Set[B] = (left \ that) ∪ (right \ that)
 
+    def isSubsetOf(that: Set[?]): Boolean =
+      this.forAll(element => that.exists(_ == element))
+
     override def toString: String = s"[$left - [$element] - $right]"
 
     override def equals(obj: Any): Boolean =
       obj match
-        case s @ NonEmpty(left, v, right) => s.forAll(element => this.exists(_ == element))
-        case _                            => false
+        case that: NonEmpty[_] => that.isSubsetOf(this) && this.isSubsetOf(that)
+        case _                 => false
+
+    override def hashCode(): Int = 31 * left.hashCode() + 17 * element.hashCode() + 7 * right.hashCode()
 
   end NonEmpty
